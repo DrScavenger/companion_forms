@@ -9,24 +9,23 @@ global $cforms_db_version;
 $cforms_db_version = '1.0';
 
 function cforms_install(){
-	global $wpdb;
-
-	$charset_collate = $wpdb->get_charset_collate();
-
-	$table_name = $wpdb->prefix . 'cforms';
-
-	$sql = "CREATE TABLE $table_name (
-		id int(6) NOT NULL AUTO_INCREMENT,
-		title varchar(255) NOT NULL,
-		content varchar(255) DEFAULT '' NOT NULL,
-		UNIQUE KEY id (id)
-	) $charset_collate;";
+	    global $wpdb;
+	
+	    $table_name = $wpdb->prefix . 'cforms';
+	
+	    $sql = "CREATE TABLE $table_name (
+	      id int(11) NOT NULL AUTO_INCREMENT,
+	      title varchar(255) DEFAULT NULL,
+	      content varchar(255) DEFAULT NULL,
+	      UNIQUE KEY id (id)
+	    );";
 
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
 	dbDelta( $sql );
-	
 	add_option( 'cforms_db_version', $cforms_db_version );
 }
+
+
 
 register_activation_hook( __FILE__, 'cforms_install' );
 
